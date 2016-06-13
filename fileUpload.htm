@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="https://rawgit.com/kamranahmedse/jquery-toast-plugin/master/src/jquery.toast.js"></script>
+    <link rel="stylesheet" href="https://rawgit.com/kamranahmedse/jquery-toast-plugin/master/src/jquery.toast.css">
+    <script type="text/javascript"
+            src="//api.filestackapi.com/filestack.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>foozyDude - Upload File!</title>
+</head>
+<body>
+
+    <style>
+        body {
+            background: #18bc9c;
+        }
+
+        .bodyContainer {
+            font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 15px;
+            line-height: 1.42857143;
+            color: #2c3e50;
+            background-color: #ffffff;
+            background: #18bc9c;
+        }
+
+        .navbar-default {
+            background-color: #2c3e50;
+            border-color: transparent;
+        }
+
+        .bodyContent {
+            margin-bottom: 30px;
+            padding: 30px 50px;
+            color: inherit;
+        }
+    </style>
+    <div class="bodyContainer">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <!--<img alt="Brand" src="..."> -->
+                        foozyDude
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="bodyContent">
+
+            <div style="max-width: 700px; margin:0 auto;">
+                <h1>Upload File!</h1>
+                <p>Upload your file to Cloud without any hickup!</p>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="http://" id="txtUrl">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="uploadFile();">Upload!</button>
+                            </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function uploadFile() {
+            var strUrl = $("#txtUrl").val();
+            if (strUrl.length < 5) {
+                alert("Please put valid URl.");
+                return;
+            }
+            var filename = strUrl.split('/').pop()
+            filepicker.setKey("AvIdmY4FvQ3QoBOeFsxRQz")
+            filepicker.exportFile(
+            strUrl,
+            {
+                suggestedFilename: filename
+            },
+            function (Blob) {
+                console.log(Blob.url);
+                uploadSuccess()
+            });
+        }
+
+        function uploadSuccess() {
+            $("#txtUrl").val("");
+            $.toast({
+                text: "Your file is successfully been uploaded to Cloud storage!", // Text that is to be shown in the toast
+                heading: 'Success', // Optional heading to be shown on the toast
+                icon: 'success', // Type of toast icon
+                showHideTransition: 'fade', // fade, slide or plain
+                allowToastClose: true, // Boolean value true or false
+                hideAfter: 7000, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
+                stack: 5, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
+                position: 'top-right', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
+                textAlign: 'left',  // Text alignment i.e. left, right or center
+                loader: true,  // Whether to show loader or not. True by default
+                loaderBg: '#9EC600',  // Background color of the toast loader
+            });
+        }
+
+        function uploadFailure() {
+            $.toast({
+                text: "There was some Error! Please try again.", // Text that is to be shown in the toast
+                heading: 'Failure', // Optional heading to be shown on the toast
+                icon: 'error', // Type of toast icon
+                showHideTransition: 'fade', // fade, slide or plain
+                allowToastClose: true, // Boolean value true or false
+                hideAfter: 7000, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
+                stack: 5, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
+                position: 'top-right', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
+                textAlign: 'left',  // Text alignment i.e. left, right or center
+                loader: true,  // Whether to show loader or not. True by default
+                loaderBg: '#9EC600',  // Background color of the toast loader
+            });
+        }
+
+    </script>
+
+</body>
+</html>
